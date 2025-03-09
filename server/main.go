@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"io"
-	"log"
 	"net/http"
 	"time"
 )
@@ -27,12 +26,16 @@ type Cotacao struct {
 	USDBRL USDBRL `json:"USDBRL"`
 }
 
+type CotacaoReturn struct {
+	Bid string `json:"bid"`
+}
+
 func main() {
-	http.HandleFunc("/", buscaCotacaoDolar)
+	http.HandleFunc("/cotacao", BuscaCotacaoDolar)
 	http.ListenAndServe(":8080", nil)
 }
 
-func buscaCotacaoDolar(w http.ResponseWriter, r *http.Request) {
+func BuscaCotacaoDolar(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 200*time.Millisecond)
 	defer cancel()
 
@@ -40,17 +43,27 @@ func buscaCotacaoDolar(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	body, err := io.ReadAll(req.Body)
+
+	res, err := http.DefaultClient.Do(req)
 	if err != nil {
 		panic(err)
 	}
+
+	defer res.Body.Close()
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		panic(err)
+	}
+
 	var c Cotacao
 	err = json.Unmarshal(body, &c)
 	if err != nil {
 		panic(err)
 	}
-	w.Header().Set("Content-Type", "application/json")
-	w.Write([]byte(c.USDBRL.Bid))
 
-	log.Println("Request finalizada com sucesso")
+	bid := CotacaoReturn{Bid: c.USDBRL.Bid}
+	err = json.NewEncoder(w).Encode(&bid)
+	if err != nil {
+		panic(err)
+	}
 }
