@@ -19,4 +19,4 @@
 
 ## Server and Client
 
-- [] Os 3 contextos devem retornar erro nos logs caso o tempo de execução seja insuficiente;
+- [x] Os 3 contextos devem retornar erro nos logs caso o tempo de execução seja insuficiente;
