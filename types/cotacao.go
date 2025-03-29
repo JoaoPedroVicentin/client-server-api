@@ -1,4 +1,4 @@
-package models
+package types
 
 type USDBRL struct {
 	Code       string `json:"code"`
@@ -20,4 +20,9 @@ type Cotacao struct {
 
 type CotacaoReturn struct {
 	Bid string `json:"bid"`
+}
+
+type CotacaoDb struct {
+	ID    string
+	Valor float64
 }

@@ -4,9 +4,9 @@
 
 - [x] Consumir a API contendo o câmbio de Dólar e Real;
 - [x] Retornar no formato JSON o resultado para o cliente;
-- [] Registrar no banco de dados SQLite cada cotação recebida;
-- [] O timeout máximo para chamar a API de cotação do dólar deverá ser de 200ms;
-- [] O timeout máximo para conseguir persistir os dados no banco deverá ser de 10ms;
+- [x] Registrar no banco de dados SQLite cada cotação recebida;
+- [x] O timeout máximo para chamar a API de cotação do dólar deverá ser de 200ms;
+- [x] O timeout máximo para conseguir persistir os dados no banco deverá ser de 10ms;
 - [x] Enviar para o Client apenas o valor atual do câmbio (campo "bid" do JSON);
 - [x] O endpoint deverá ser: /cotacao;
 - [x] A porta a ser utilizada pelo servidor HTTP será a 8080;
